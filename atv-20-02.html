@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>criar-animal-poo</title>
+</head>
+<body>
+    
+<div class="cabecalho">
+    <img id="imagem-1" src="imagem/logo-if.png" alt="">
+    <h1>Crie seu animal - POO</h1>
+    <img id="imagem-2" src="imagem/logo-poo.png" alt="">
+</div>
+
+<div class="form">
+    <img id="logo-poo" src="imagem/logo-poo.png" alt="">
+    <h2>Se divirta conosco!</h2>
+    <label for="escolha">Escolha um animal:</label>
+        <select id="tipoAnimal">
+            <option value="" selected disabled>Selecione um Pet</option>
+            <option value="cachorro">Cachorro</option>
+            <option value="gato">Gato</option>
+            <option value="passaro">Pássaro</option>
+            <option value="peixe">Peixe</option>
+            <option value="cavalo">Cavalo</option>
+        </select>
+    <label for="nomeAnimal">Dê um apelido ao pet:</label>
+    <input type="text" id="nomeAnimal" placeholder="Digite um nome" required>
+    <label for="corAnimal">Cor do pet:</label>
+    <input type="color" id="corAnimal" required>
+    <button onclick="criarAnimal()">Criar Pet</button>
+    <div id="resultado"></div>
+</div>
+
+<script>
+   class Animal {
+        constructor(tipo, nome, cor) {
+            this.tipo = tipo;
+            this.nome = nome;
+            this.cor = cor;
+        }
+        fazerSom() {
+            let som = {
+                cachorro: "Latindo: Au Au!",
+                gato: "Miando: Miau!",
+                passaro: "Cantando: Bem-te-vi Bem-te-vi!",
+                peixe: "Shi Shi!",
+                cavalo: "Relinchando: Ihihihi!"
+            };
+            return som[this.tipo] || "Esse animal não faz som!";
+        }
+        correr() {
+            return `${this.nome} está correndo!`;
+        }
+    }
+
+    function criarAnimal() {
+        let tipo = document.getElementById("tipoAnimal").value;
+        let nome = document.getElementById("nomeAnimal").value;
+        let cor = document.getElementById("corAnimal").value;
+        
+        if (!tipo || !nome) {
+            alert("Por favor, preencha todos os campos!");
+            return;
+        }
+        
+        let pet = new Animal(tipo, nome, cor);
+        
+        document.getElementById("resultado").innerHTML = `
+            <h3>Seu pet foi criado!</h3>
+            <p><strong>Nome:</strong> ${pet.nome}</p>
+            <p><strong>Tipo:</strong> ${pet.tipo}</p>
+            <p><strong>Cor:</strong> <span style="color:${pet.cor};">⬤</span></p>
+            <button onclick="interagir('som', '${pet.tipo}', '${pet.nome}')">Fazer Som</button>
+            <button onclick="interagir('correr', '${pet.tipo}', '${pet.nome}')">Correr</button>
+            <p id="acao"></p>
+        `;
+    }
+
+    function interagir(acao, tipo, nome) {
+        let animal = new Animal(tipo, nome, "");
+        let resultado = acao === 'som' ? animal.fazerSom() : animal.correr();
+        document.getElementById("acao").innerText = resultado;
+    }
+</script>
+
+<div class="rodape">
+    <h5 id="cop" >© 2024 - TODOS OS DIREITOS RESERVADOS A PAULO WISNIEWSKI</h5>
+</div>
+
+</body>
+</html>
